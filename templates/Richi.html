@@ -1,0 +1,60 @@
+<html>
+<head>
+</head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="{{ CSS }}">
+
+<body bgcolor=#ffa64d>
+
+<h1 align="center"> Quiz für Paul </h1>
+<p></p>
+
+<div class="w3-content w3-row">
+  <div class="w3-container w3-half">
+	<img src="{{ Bild }}" height="400" width="400"> </img>
+  </div>
+  <div class="w3-container w3-half">
+    <h2> {{ Frage}} </h2>  
+	<audio id="sound1" src="{{ audio }}" preload="auto"></audio>
+	<button class="button" onclick="document.getElementById('sound1').play();">Play</button>
+  </div>
+</div>
+
+
+<div class="questions">
+	<button type="button" name="button" class="button btn 1">{{Option1}}</button>
+	<button name="button" class="button btn 2">{{Option2}}</button>
+	<button name="button" class="button">{{Option3}}</button>
+</div>
+
+<script type=text/javascript>
+score={{ score }}
+durchgang={{ durchgang }}
+window.onload = function(){
+    buttons = document.getElementsByName('button');
+    for(i=0; i<buttons.length;i++){
+        buttons[i].addEventListener("click", function(e) {
+            e = e || window.event;
+            var target = e.target || e.srcElement,
+            text = target.textContent || target.innerText; 
+			if(text=='{{ Antwort }}')
+				alert("Genau!"),
+				score+=1,
+				durchgang+=1;
+			else
+				alert("Leider falsch, richtig wäre " + '{{ Antwort }}'),																														
+				durchgang=durchgang+1;
+				
+			if(durchgang==3)
+				window.location.replace("http://127.0.0.1:5000/final?score="+score);
+			else
+				window.location.replace("http://127.0.0.1:5000/?id="+durchgang+"&score="+score);
+            })	
+    }
+};
+</script>
+
+</body>
+</html>
